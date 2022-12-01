@@ -1,12 +1,15 @@
+import {useState} from "react";
 import "./App.css";
 import HeaderMain from "./HeaderMain";
+import HeaderNewBill from "./HeaderNewBill";
 
 function App() {
-	return (
-		<div className="App wrapper">
-			<HeaderMain />
-		</div>
-	);
+	const [inputDisplay, setInputDisplay] = useState(true);
+
+	const changeInput = () => {
+		setInputDisplay(!inputDisplay);
+	};
+	return <div className="App wrapper">{inputDisplay ? <HeaderMain changeDisplay={changeInput} /> : <HeaderNewBill changeDisplay={changeInput} />}</div>;
 }
 
 export default App;
