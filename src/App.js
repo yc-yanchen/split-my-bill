@@ -7,23 +7,20 @@ import firebase from "./firebase";
 import {getDatabase, ref, push} from "firebase/database";
 
 function App() {
+	// *********************** useState Related Start
+	// State responsible for determine which UI to display for the user
+	const [inputDisplay, setInputDisplay] = useState(true);
+	const [userBill, setUserBill] = useState({});
+	// *********************** useState Related End
+
 	// *********************** Firebase RT Database related START
-	// Initialize database content
 	const database = getDatabase(firebase);
 	const dbRef = ref(database);
 
-	// const userPackage = {
-	// 	Total: `$20`,
-	// 	Split: 4,
-	// 	TotalPerPerson: `$5`,
-	// };
 	// Testing push function to the database
 	// const pushTest = push(dbRef, userPackage);
 
 	// *********************** Firebase RT Database related END
-
-	// State responsible for determine which UI to display for the user
-	const [inputDisplay, setInputDisplay] = useState(true);
 
 	// Responsible for changing the UI
 	const changeInput = () => {
@@ -33,13 +30,16 @@ function App() {
 	// Responsible for the onSubmit action of the form
 	const handleBillSubmit = (e) => {
 		e.preventDefault();
+		push(dbRef, userBill);
 		changeInput();
 	};
 
 	// Responsible for collecting the information on the bill
 	const collectBill = (e) => {
 		console.log(e.target.valueAsNumber);
-		push(dbRef, e.target.valueAsNumber);
+		setUserBill({
+			BillTotal: e.target.valueAsNumber,
+		});
 	};
 
 	return (
