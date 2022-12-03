@@ -12,11 +12,11 @@ function App() {
 	const database = getDatabase(firebase);
 	const dbRef = ref(database);
 
-	const userPackage = {
-		Total: `$20`,
-		Split: 4,
-		TotalPerPerson: `$5`,
-	};
+	// const userPackage = {
+	// 	Total: `$20`,
+	// 	Split: 4,
+	// 	TotalPerPerson: `$5`,
+	// };
 	// Testing push function to the database
 	// const pushTest = push(dbRef, userPackage);
 
