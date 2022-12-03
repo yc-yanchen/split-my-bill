@@ -1,3 +1,11 @@
+:root {
+	--brick-red: #c33c54ff;
+	--indigo-dye: #254e70ff;
+	--teal-blue: #37718eff;
+	--alice-blue: #eef8ffff;
+	--spanish-viridian: #0c7c59ff;
+}
+
 .App {
 	text-align: center;
 	padding-top: 30px;
@@ -105,7 +113,7 @@ li {
 .header-new-bill {
 	display: flex;
 	flex-direction: column;
-gap: 20vh;
+	gap: 20vh;
 }
 
 .header-new-bill h1 {

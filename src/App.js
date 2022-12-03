@@ -1,15 +1,59 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import "./App.css";
 import HeaderMain from "./HeaderMain";
 import HeaderNewBill from "./HeaderNewBill";
+import FormNewBill from "./FormNewBill";
+import firebase from "./firebase";
+import {getDatabase, ref, push} from "firebase/database";
 
 function App() {
+	// *********************** Firebase RT Database related START
+	// Initialize database content
+	const database = getDatabase(firebase);
+	const dbRef = ref(database);
+
+	const userPackage = {
+		Total: `$20`,
+		Split: 4,
+		TotalPerPerson: `$5`,
+	};
+	// Testing push function to the database
+	// const pushTest = push(dbRef, userPackage);
+
+	// *********************** Firebase RT Database related END
+
+	// State responsible for determine which UI to display for the user
 	const [inputDisplay, setInputDisplay] = useState(true);
 
+	// Responsible for changing the UI
 	const changeInput = () => {
 		setInputDisplay(!inputDisplay);
 	};
-	return <div className="App wrapper">{inputDisplay ? <HeaderMain changeDisplay={changeInput} /> : <HeaderNewBill changeDisplay={changeInput} />}</div>;
+
+	// Responsible for the onSubmit action of the form
+	const handleBillSubmit = (e) => {
+		e.preventDefault();
+		changeInput();
+	};
+
+	// Responsible for collecting the information on the bill
+	const collectBill = (e) => {
+		console.log(e.target.valueAsNumber);
+		push(dbRef, e.target.valueAsNumber);
+	};
+
+	return (
+		<div className="App wrapper">
+			{inputDisplay ? (
+				<HeaderMain changeDisplay={changeInput} />
+			) : (
+				<div>
+					<HeaderNewBill changeDisplay={changeInput} />
+					<FormNewBill handleBillSubmit={handleBillSubmit} collectBill={collectBill} />
+				</div>
+			)}
+		</div>
+	);
 }
 
 export default App;
