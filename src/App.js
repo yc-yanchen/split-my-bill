@@ -1,22 +1,30 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import "./App.css";
 import HeaderMain from "./HeaderMain";
 import HeaderNewBill from "./HeaderNewBill";
 import FormNewBill from "./FormNewBill";
 import firebase from "./firebase";
-import {getDatabase, ref, push} from "firebase/database";
+import {getDatabase, ref, push, get} from "firebase/database";
 
 function App() {
 	// *********************** useState Related Start
 	// State responsible for determine which UI to display for the user
 	const [inputDisplay, setInputDisplay] = useState(true);
-	const [userTotalBill, setUserTotalBill] = useState();
-	const [userSplitNumber, setUserSplit] = useState();
+	const [userTotalBill, setUserTotalBill] = useState("");
+	const [userSplitNumber, setUserSplit] = useState("");
+	const [previousBills, setPreviousBills] = useState({});
 	// *********************** useState Related End
 
 	// *********************** Firebase RT Database related START
+
+	// useEffect(() => {
+	// 	const database = getDatabase(firebase);
+	// 	const dbRef = ref(database);
+	// }, []);
+
 	const database = getDatabase(firebase);
 	const dbRef = ref(database);
+
 	// *********************** Firebase RT Database related END
 
 	// Responsible for changing the UI
@@ -55,10 +63,36 @@ function App() {
 		});
 	};
 
+	// useEffect(() => {
+	// 	get(dbRef).then((snapshot) => {
+	// 		if (snapshot.exists()) {
+	// 			setPreviousBills(snapshot.val());
+	// 			console.log(previousBills);
+	// 		} else {
+	// 			console.log("No data");
+	// 		}
+	// 	});
+	// }, [inputDisplay]);
+
+	useEffect(() => {
+		if (true === true) {
+			get(dbRef).then((snapshot) => {
+				if (snapshot.exists()) {
+					setPreviousBills(snapshot.val());
+					console.log(snapshot.val());
+				} else {
+					console.log("No data");
+				}
+			});
+		}
+	}, [inputDisplay]);
+
 	return (
 		<div className="App wrapper">
 			{inputDisplay ? (
-				<HeaderMain changeDisplay={changeInput} />
+				<div>
+					<HeaderMain changeDisplay={changeInput} />
+				</div>
 			) : (
 				<div>
 					<HeaderNewBill changeDisplay={changeInput} />
