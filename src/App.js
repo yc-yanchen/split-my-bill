@@ -10,16 +10,13 @@ function App() {
 	// *********************** useState Related Start
 	// State responsible for determine which UI to display for the user
 	const [inputDisplay, setInputDisplay] = useState(true);
-	const [userBill, setUserBill] = useState({});
+	const [userTotalBill, setUserTotalBill] = useState();
+	const [userSplitNumber, setUserSplit] = useState();
 	// *********************** useState Related End
 
 	// *********************** Firebase RT Database related START
 	const database = getDatabase(firebase);
 	const dbRef = ref(database);
-
-	// Testing push function to the database
-	// const pushTest = push(dbRef, userPackage);
-
 	// *********************** Firebase RT Database related END
 
 	// Responsible for changing the UI
@@ -30,15 +27,31 @@ function App() {
 	// Responsible for the onSubmit action of the form
 	const handleBillSubmit = (e) => {
 		e.preventDefault();
-		push(dbRef, userBill);
+		console.log(e);
+		const billInformation = {
+			totalBill: userTotalBill.totalBill,
+			splitNumber: userSplitNumber.splitNumber,
+			// Using Math.ceil so numbers will round up to prevent money from disapearing in scenarios such as: $1 / 3 = $0.33, $0.33 * 3 = $0.99. Where did the money goooo?
+			totalPerPerson: `${(Math.ceil((userTotalBill.totalBill / userSplitNumber.splitNumber) * 100) / 100).toFixed(2)}`,
+		};
+		push(dbRef, billInformation);
 		changeInput();
 	};
 
 	// Responsible for collecting the information on the bill
-	const collectBill = (e) => {
-		console.log(e.target.valueAsNumber);
-		setUserBill({
-			BillTotal: e.target.valueAsNumber,
+	const collectTotalBill = (e) => {
+		console.log(e);
+		setUserTotalBill({
+			// Rounding inacurracy will not be present because form will prevent user from inputing more than 2 decimals thus no rounding or truncating necessary here.
+			totalBill: e.target.valueAsNumber.toFixed(2),
+		});
+	};
+
+	// Responsible for collecting the information on the number of split of the bill
+	const collectUserSplit = (e) => {
+		console.log(e);
+		setUserSplit({
+			splitNumber: e.target.valueAsNumber,
 		});
 	};
 
@@ -49,7 +62,7 @@ function App() {
 			) : (
 				<div>
 					<HeaderNewBill changeDisplay={changeInput} />
-					<FormNewBill handleBillSubmit={handleBillSubmit} collectBill={collectBill} />
+					<FormNewBill handleBillSubmit={handleBillSubmit} collectTotalBill={collectTotalBill} collectUserSplit={collectUserSplit} />
 				</div>
 			)}
 		</div>
