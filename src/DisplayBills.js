@@ -1,6 +1,7 @@
 const DisplayBill = (props) => {
 	return (
 		<main>
+			<h2>Previous Bills</h2>
 			<ul className="bill-list">
 				{props.billDataObject.map((data) => {
 					console.log(data);

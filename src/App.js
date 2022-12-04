@@ -13,22 +13,12 @@ function App() {
 	const [inputDisplay, setInputDisplay] = useState(true);
 	const [userTotalBill, setUserTotalBill] = useState("");
 	const [userSplitNumber, setUserSplitNumber] = useState("");
-
-	// TEST
 	const [billDataObject, setBillDataObject] = useState([]);
-
 	// *********************** useState Related End
 
 	// *********************** Firebase RT Database related START
-
-	// useEffect(() => {
-	// 	const database = getDatabase(firebase);
-	// 	const dbRef = ref(database);
-	// }, []);
-
 	const database = getDatabase(firebase);
 	const dbRef = ref(database);
-
 	// *********************** Firebase RT Database related END
 
 	// Responsible for changing the UI
@@ -70,7 +60,7 @@ function App() {
 	// When user lands on the home screen, app will automatically retrieve the database data and store it in the previousBill state
 
 	useEffect(() => {
-		if (true === true) {
+		if (inputDisplay === true) {
 			const billDataContainer = [];
 			get(dbRef).then((snapshot) => {
 				if (snapshot.exists()) {
