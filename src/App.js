@@ -5,14 +5,22 @@ import HeaderNewBill from "./HeaderNewBill";
 import FormNewBill from "./FormNewBill";
 import firebase from "./firebase";
 import {getDatabase, ref, push, get} from "firebase/database";
+import DisplayBill from "./DisplayBills";
 
 function App() {
 	// *********************** useState Related Start
 	// State responsible for determine which UI to display for the user
 	const [inputDisplay, setInputDisplay] = useState(true);
 	const [userTotalBill, setUserTotalBill] = useState("");
-	const [userSplitNumber, setUserSplit] = useState("");
-	const [previousBills, setPreviousBills] = useState({});
+	const [userSplitNumber, setUserSplitNumber] = useState("");
+
+	const [previousTotalBill, setPreviousTotalBill] = useState([]);
+	const [previousSplitNumber, setPreviousSplitNumber] = useState([]);
+	const [previousTotalPerPerson, setPreviousTotalPerPerson] = useState([]);
+
+	// TEST
+	const [billDataObject, setBillDataObject] = useState({});
+
 	// *********************** useState Related End
 
 	// *********************** Firebase RT Database related START
@@ -58,28 +66,33 @@ function App() {
 	// Responsible for collecting the information on the number of split of the bill
 	const collectUserSplit = (e) => {
 		console.log(e);
-		setUserSplit({
+		setUserSplitNumber({
 			splitNumber: e.target.valueAsNumber,
 		});
 	};
 
-	// useEffect(() => {
-	// 	get(dbRef).then((snapshot) => {
-	// 		if (snapshot.exists()) {
-	// 			setPreviousBills(snapshot.val());
-	// 			console.log(previousBills);
-	// 		} else {
-	// 			console.log("No data");
-	// 		}
-	// 	});
-	// }, [inputDisplay]);
+	// When user lands on the home screen, app will automatically retrieve the database data and store it in the previousBill state
 
 	useEffect(() => {
 		if (true === true) {
 			get(dbRef).then((snapshot) => {
 				if (snapshot.exists()) {
-					setPreviousBills(snapshot.val());
-					console.log(snapshot.val());
+					const packageSplitNumber = [];
+					const packageTotalBill = [];
+					const packageTotalPerPerson = [];
+
+					const data = snapshot.val();
+					console.log(data);
+
+					for (let key in data) {
+						// console.log(data[key]);
+						packageTotalBill.push(data[key].totalBill);
+						packageSplitNumber.push(data[key].splitNumber);
+						packageTotalPerPerson.push(data[key].totalPerPerson);
+					}
+					setPreviousTotalBill(packageTotalBill);
+					setPreviousSplitNumber(packageSplitNumber);
+					setPreviousTotalPerPerson(packageTotalPerPerson);
 				} else {
 					console.log("No data");
 				}
@@ -92,6 +105,7 @@ function App() {
 			{inputDisplay ? (
 				<div>
 					<HeaderMain changeDisplay={changeInput} />
+					<DisplayBill previousTotalBill={previousTotalBill} />
 				</div>
 			) : (
 				<div>
