@@ -2,9 +2,9 @@ const HeaderMain = (props) => {
 	return (
 		<header className="header-main">
 			<h1>Split My Bill</h1>
-			<div className="add-bill" onClick={props.changeDisplay}>
-				<p className="plus-symbol">+</p>
-			</div>
+			<button onClick={props.changeDisplay}>
+				<span class="material-symbols-outlined button-style button-round button-add ">add</span>
+			</button>
 		</header>
 	);
 };
