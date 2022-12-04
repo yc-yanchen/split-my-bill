@@ -19,7 +19,7 @@ function App() {
 	const [previousTotalPerPerson, setPreviousTotalPerPerson] = useState([]);
 
 	// TEST
-	const [billDataObject, setBillDataObject] = useState({});
+	const [billDataObject, setBillDataObject] = useState([]);
 
 	// *********************** useState Related End
 
@@ -75,24 +75,22 @@ function App() {
 
 	useEffect(() => {
 		if (true === true) {
+			const billDataContainer = [];
 			get(dbRef).then((snapshot) => {
 				if (snapshot.exists()) {
-					const packageSplitNumber = [];
-					const packageTotalBill = [];
-					const packageTotalPerPerson = [];
-
 					const data = snapshot.val();
-					console.log(data);
+					// console.log(data);
 
 					for (let key in data) {
-						// console.log(data[key]);
-						packageTotalBill.push(data[key].totalBill);
-						packageSplitNumber.push(data[key].splitNumber);
-						packageTotalPerPerson.push(data[key].totalPerPerson);
+						const billData = [];
+						billData.push(key);
+						billData.push(data[key].totalBill);
+						billData.push(data[key].splitNumber);
+						billData.push(data[key].totalPerPerson);
+						billDataContainer.push(billData);
 					}
-					setPreviousTotalBill(packageTotalBill);
-					setPreviousSplitNumber(packageSplitNumber);
-					setPreviousTotalPerPerson(packageTotalPerPerson);
+					setBillDataObject(billDataContainer);
+					console.log(billDataContainer);
 				} else {
 					console.log("No data");
 				}
@@ -105,7 +103,7 @@ function App() {
 			{inputDisplay ? (
 				<div>
 					<HeaderMain changeDisplay={changeInput} />
-					<DisplayBill previousTotalBill={previousTotalBill} />
+					<DisplayBill billDataObject={billDataObject} />
 				</div>
 			) : (
 				<div>

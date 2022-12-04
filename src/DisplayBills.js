@@ -2,10 +2,14 @@ const DisplayBill = (props) => {
 	return (
 		<main>
 			<ul className="bill-list">
-				{props.previousTotalBill.map((data) => {
+				{props.billDataObject.map((data) => {
+					console.log(data);
 					return (
-						<li className="bill-container">
-							<p>{data}</p>
+						<li className="bill-container" key={data}>
+							<p>Bill ID: {data[0]}</p>
+							<p>Bill Total: ${data[1]}</p>
+							<p>Number of Split: {data[2]}</p>
+							<p>Total Per Person: {data[3]}</p>
 						</li>
 					);
 				})}
