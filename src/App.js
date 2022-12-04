@@ -14,10 +14,6 @@ function App() {
 	const [userTotalBill, setUserTotalBill] = useState("");
 	const [userSplitNumber, setUserSplitNumber] = useState("");
 
-	const [previousTotalBill, setPreviousTotalBill] = useState([]);
-	const [previousSplitNumber, setPreviousSplitNumber] = useState([]);
-	const [previousTotalPerPerson, setPreviousTotalPerPerson] = useState([]);
-
 	// TEST
 	const [billDataObject, setBillDataObject] = useState([]);
 
