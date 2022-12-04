@@ -380,7 +380,7 @@ button span {
 }
 
 .button-add {
-	position: absolute;
+	position: fixed;
 	bottom: 40px;
 	right: 40px
 }
