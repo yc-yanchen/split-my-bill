@@ -36,6 +36,7 @@ function App() {
 			splitNumber: userSplitNumber.splitNumber,
 			// Using Math.ceil so numbers will round up to prevent money from disapearing in scenarios such as: $1 / 3 = $0.33, $0.33 * 3 = $0.99. Where did the money goooo?
 			totalPerPerson: `${(Math.ceil((userTotalBill.totalBill / userSplitNumber.splitNumber) * 100) / 100).toFixed(2)}`,
+			timeCreated: `${new Date()}`,
 		};
 		push(dbRef, billInformation);
 		changeInput();
@@ -68,6 +69,7 @@ function App() {
 					for (let key in data) {
 						const billData = [];
 						billData.push(key);
+						billData.push(data[key].timeCreated);
 						billData.push(data[key].totalBill);
 						billData.push(data[key].splitNumber);
 						billData.push(data[key].totalPerPerson);
@@ -95,6 +97,7 @@ function App() {
 
 	const collectSearchID = (e) => {
 		console.log(e.target.value);
+		console.log(e);
 		setBillSearchID(e.target.value);
 	};
 
