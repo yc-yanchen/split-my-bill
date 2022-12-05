@@ -4,7 +4,7 @@ import HeaderMain from "./HeaderMain";
 import HeaderNewBill from "./HeaderNewBill";
 import FormNewBill from "./FormNewBill";
 import firebase from "./firebase";
-import {getDatabase, ref, push, get} from "firebase/database";
+import {getDatabase, ref, push, get, onValue} from "firebase/database";
 import DisplayBill from "./DisplayBills";
 
 function App() {
@@ -60,27 +60,26 @@ function App() {
 	// When user lands on the home screen, app will automatically retrieve the database data and store it in the previousBill state
 
 	useEffect(() => {
-		if (inputDisplay === true) {
-			const billDataContainer = [];
-			get(dbRef).then((snapshot) => {
-				if (snapshot.exists()) {
-					const data = snapshot.val();
+		const billDataContainer = [];
+		onValue(dbRef, (snapshot) => {
+			if (snapshot.exists()) {
+				const data = snapshot.val();
 
-					for (let key in data) {
-						const billData = [];
-						billData.push(key);
-						billData.push(data[key].timeCreated);
-						billData.push(data[key].totalBill);
-						billData.push(data[key].splitNumber);
-						billData.push(data[key].totalPerPerson);
-						billDataContainer.push(billData);
-					}
-					setBillDataObject(billDataContainer);
-				} else {
-					console.log("No data");
+				for (let key in data) {
+					const billData = [];
+					billData.push(key);
+					billData.push(data[key].timeCreated);
+					billData.push(data[key].totalBill);
+					billData.push(data[key].splitNumber);
+					billData.push(data[key].totalPerPerson);
+					billDataContainer.push(billData);
 				}
-			});
-		}
+				setBillDataObject(billDataContainer);
+			} else {
+				console.log("No data");
+			}
+		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inputDisplay]);
 
