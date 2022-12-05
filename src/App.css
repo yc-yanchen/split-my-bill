@@ -307,6 +307,18 @@ button {
 .material-symbols-outlined {
 	font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
+
+.add-shadow {
+	/* float shadow */
+	-webkit-box-shadow: 0px 1px 8px -8px #000000;
+	box-shadow: 0px 1px 8px -8px #000000;
+}
+
+.add-shadow:hover,
+.add-shadow:focus {
+	-webkit-box-shadow: 0px 4px 8px -8px #000000;
+	box-shadow: 0px 4px 8px -8px #000000;
+}
 /* *****************GENERAL STYLING END***************** */
 
 /* *****************BUTTON and SYMBOL STYLING START***************** */
@@ -335,10 +347,8 @@ button span {
 .button-rounded {
 	border-radius: 16px;
 	background-color: var(--highlight);
-	/* float shadow */
-	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
-	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 }
+
 .button-bottom-float {
 	position: fixed;
 	bottom: 24px;
@@ -438,7 +448,6 @@ nav {
 	width: 48px;
 	border-bottom-left-radius: 4px;
 	border-top-left-radius: 4px;
-;
 }
 
 .button-submit {
