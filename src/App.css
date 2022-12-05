@@ -418,6 +418,8 @@ nav {
 	display: flex;
 	align-items: center;
 	width: 100%;
+	border: 1px var(--outline) solid;
+	border-radius: 4px;
 }
 
 .new-bill-form input {
@@ -426,9 +428,6 @@ nav {
 	border: none;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
-	border-top: 1px var(--outline) solid;
-	border-bottom: 1px var(--outline) solid;
-	border-right: 1px var(--outline) solid;
 }
 
 .new-bill-form .icon {
@@ -439,9 +438,7 @@ nav {
 	width: 48px;
 	border-bottom-left-radius: 4px;
 	border-top-left-radius: 4px;
-	border-top: 1px var(--outline) solid;
-	border-bottom: 1px var(--outline) solid;
-	border-left: 1px var(--outline) solid;
+;
 }
 
 .button-submit {
