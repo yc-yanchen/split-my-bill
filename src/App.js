@@ -14,6 +14,8 @@ function App() {
 	const [userTotalBill, setUserTotalBill] = useState("");
 	const [userSplitNumber, setUserSplitNumber] = useState("");
 	const [billDataObject, setBillDataObject] = useState([]);
+	const [billSearchID, setBillSearchID] = useState("");
+	const [filteredBill, setFilteredBill] = useState([]);
 	// *********************** useState Related End
 
 	// *********************** Firebase RT Database related START
@@ -29,7 +31,6 @@ function App() {
 	// Responsible for the onSubmit action of the form
 	const handleBillSubmit = (e) => {
 		e.preventDefault();
-		console.log(e);
 		const billInformation = {
 			totalBill: userTotalBill.totalBill,
 			splitNumber: userSplitNumber.splitNumber,
@@ -42,7 +43,6 @@ function App() {
 
 	// Responsible for collecting the information on the bill
 	const collectTotalBill = (e) => {
-		console.log(e);
 		setUserTotalBill({
 			// Rounding inacurracy will not be present because form will prevent user from inputing more than 2 decimals thus no rounding or truncating necessary here.
 			totalBill: e.target.valueAsNumber.toFixed(2),
@@ -51,7 +51,6 @@ function App() {
 
 	// Responsible for collecting the information on the number of split of the bill
 	const collectUserSplit = (e) => {
-		console.log(e);
 		setUserSplitNumber({
 			splitNumber: e.target.valueAsNumber,
 		});
@@ -65,7 +64,6 @@ function App() {
 			get(dbRef).then((snapshot) => {
 				if (snapshot.exists()) {
 					const data = snapshot.val();
-					// console.log(data);
 
 					for (let key in data) {
 						const billData = [];
@@ -76,7 +74,6 @@ function App() {
 						billDataContainer.push(billData);
 					}
 					setBillDataObject(billDataContainer);
-					console.log(billDataContainer);
 				} else {
 					console.log("No data");
 				}
@@ -85,18 +82,35 @@ function App() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inputDisplay]);
 
+	// Responsible for processing the search request
+	const handleBillSearch = (e) => {
+		e.preventDefault();
+		const copyOfBillDataObject = [...billDataObject];
+		const tempFilteredBills = copyOfBillDataObject.filter((bills) => {
+			return bills[0] === billSearchID;
+		});
+		setFilteredBill(tempFilteredBills);
+		console.log(filteredBill);
+	};
+
+	const collectSearchID = (e) => {
+		console.log(e.target.value);
+		setBillSearchID(e.target.value);
+	};
+
 	return (
 		<div className="App wrapper">
 			{inputDisplay ? (
-				<div>
-					<HeaderMain changeDisplay={changeInput} />
-					<DisplayBill billDataObject={billDataObject} />
-				</div>
+				<>
+					<HeaderMain changeDisplay={changeInput} handleBillSearch={handleBillSearch} collectSearchID={collectSearchID} />
+					<DisplayBill billDataObject={billDataObject} billSearchID={billSearchID} filteredBill={filteredBill} />
+				</>
 			) : (
-				<div>
+				<>
 					<HeaderNewBill changeDisplay={changeInput} />
 					<FormNewBill handleBillSubmit={handleBillSubmit} collectTotalBill={collectTotalBill} collectUserSplit={collectUserSplit} />
-				</div>
+					<DisplayBill billDataObject={billDataObject} billSearchID={billSearchID} filteredBill={filteredBill} />
+				</>
 			)}
 		</div>
 	);

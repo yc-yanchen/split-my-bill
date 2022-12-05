@@ -258,6 +258,7 @@ template {
 	--on-highlight: rgb(45 22 0);
 	--card-background: rgb(247 242 242);
 	--regular-text: rgb(30 27 23);
+	--outline: rgb(170, 170, 170);
 }
 /* *****************COLOUR STYLING END***************** */
 
@@ -292,8 +293,10 @@ h5,
 h6,
 a,
 p,
-li {
-	font-size: 1.8rem;
+li,
+input,
+button {
+	font-size: 1.6rem;
 	font-weight: 400;
 	padding: 0;
 	margin: 0;
@@ -306,12 +309,13 @@ li {
 }
 /* *****************GENERAL STYLING END***************** */
 
-/* *****************BUTTON STYLING START***************** */
+/* *****************BUTTON and SYMBOL STYLING START***************** */
 button {
 	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	cursor: pointer;
 }
+.icon span,
 button span {
 	color: var(--on-highlight);
 }
@@ -325,12 +329,13 @@ button span {
 	justify-content: center;
 	/* Using content-box to add invisible padding to button for accessibility purposes */
 	box-sizing: content-box;
-	padding: 8px;
+	padding: 4px;
 }
 
-.button-round {
-	border-radius: 50%;
+.button-rounded {
+	border-radius: 16px;
 	background-color: var(--highlight);
+	/* float shadow */
 	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 }
@@ -339,7 +344,7 @@ button span {
 	bottom: 24px;
 	right: 24px;
 }
-/* *****************BUTTON STYLING END***************** */
+/* *****************BUTTON and SYMBOL STYLING END***************** */
 
 /**************************************/
 .header-main {
@@ -347,35 +352,113 @@ button span {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 10vh;
+	gap: 24px;
+	margin: 6vh 0;
 }
 
 .header-main h1 {
 	font-size: 4rem;
+	font-weight: 400;
+}
+
+.search-bar {
+	height: 48px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	background-color: white;
+	border-radius: 24px;
+	border: 1px solid var(--outline);
+}
+
+.search-bar input {
+	height: 100%;
+	width: 100%;
+	border: none;
+	padding: none;
+	border-bottom-right-radius: 24px;
+	border-top-right-radius: 24px;
+}
+
+input:focus {
+	outline: none;
+}
+
+.search-bar button {
+	height: 48px;
+	width: 48px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.search-bar span {
+	border-bottom-left-radius: 24px;
+	border-top-left-radius: 24px;
 }
 
 /**************************************/
-.header-new-bill {
-	display: flex;
-	flex-direction: column;
-	gap: 20vh;
-}
-
-.header-new-bill h1 {
-	font-size: 4rem;
-}
 
 nav {
-	height: 48px;
+	height: 60px;
 	display: flex;
 	justify-content: flex-start;
+}
+
+.new-bill-form {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+	margin-bottom: 6vh;
+}
+
+.new-bill-form .flex-container {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.new-bill-form input {
+	height: 48px;
+	width: 100%;
+	border: none;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-top: 1px var(--outline) solid;
+	border-bottom: 1px var(--outline) solid;
+	border-right: 1px var(--outline) solid;
+}
+
+.new-bill-form .icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 48px;
+	width: 48px;
+	border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
+	border-top: 1px var(--outline) solid;
+	border-bottom: 1px var(--outline) solid;
+	border-left: 1px var(--outline) solid;
+}
+
+.button-submit {
+	border-radius: 4px;
+	align-self: flex-end;
+	background-color: var(--highlight);
+	width: 120px;
+	/* float shadow */
+	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
+	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 }
 
 /**************************************/
 .bill-list {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 12px;
 }
 .bill-container {
 	background-color: var(--card-background);
@@ -385,7 +468,7 @@ nav {
 }
 
 main h2 {
-	font-size: 2rem;
+	font-size: 2.2rem;
 	text-align: left;
 	margin-bottom: 16px;
 }
