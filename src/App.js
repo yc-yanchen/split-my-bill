@@ -12,20 +12,24 @@ import SearchBar from "./SearchBar";
 function App() {
 	// useState
 	const [inputDisplay, setInputDisplay] = useState(false);
-	const [firebaseData, setFirebaseData] = useState({});
+	const [firebaseData, setFirebaseData] = useState([]);
+	const [packageToFirebase, setPackageToFirebase] = useState({splitNumber: "", timeCreated: "", totalBill: "", totalPerPerson: ""});
 
-	// Retrieve data from Firebase
 	useEffect(() => {
 		// Firebase initialization
 		const database = getDatabase(firebase);
+		// dbRed will reference our database
 		const dbRef = ref(database);
-
+		const forFirebaseData = [];
 		onValue(dbRef, (snapshot) => {
 			if (snapshot.exists()) {
-				// const data = snapshot.val();
-				// setFirebaseData(data);
-				// console.log(firebaseData);
-				console.log(snapshot.val());
+				const data = snapshot.val();
+
+				for (let key in data) {
+					forFirebaseData.push({key: key, splitNumber: data[key].splitNumber, timeCreated: data[key].timeCreated, totalBill: data[key].totalBill, totalPerPerson: data[key].totalPerPerson});
+				}
+				setFirebaseData(forFirebaseData);
+				console.log(forFirebaseData);
 			} else {
 				console.log("no data");
 			}
@@ -35,6 +39,12 @@ function App() {
 	// Flips inputDisplay from false to true
 	const changeDisplay = () => {
 		setInputDisplay(!inputDisplay);
+	};
+
+	const inputOnChange = (e) => {
+		setPackageToFirebase({totalBill: e.target.valueAsNumber});
+		console.log(e.target.valueAsNumber);
+		console.log(packageToFirebase);
 	};
 
 	return (
@@ -49,7 +59,7 @@ function App() {
 			) : (
 				<>
 					<Header title="New bill" changeDisplay={changeDisplay} />
-					<BillForm />
+					<BillForm inputOnChange={inputOnChange} />
 				</>
 			)}
 		</div>

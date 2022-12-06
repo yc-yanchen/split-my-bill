@@ -1,4 +1,4 @@
-const BillForm = () => {
+const BillForm = ({inputOnChange}) => {
 	return (
 		<form className="new-bill-form">
 			<div className="flex-container">
@@ -8,7 +8,7 @@ const BillForm = () => {
 				<div className="icon">
 					<span className="material-symbols-outlined">attach_money</span>
 				</div>
-				<input type="number" id="total-bill" step={0.01} min="0.00" placeholder="Bill total" required />
+				<input type="number" id="total-bill" step={0.01} min="0.00" placeholder="Bill total" required onChange={inputOnChange} />
 			</div>
 			<div className="flex-container">
 				<label htmlFor="split-number" className="sr-only">
