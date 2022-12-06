@@ -13,15 +13,17 @@ function App() {
 	// useState
 	const [inputDisplay, setInputDisplay] = useState(false);
 	const [firebaseData, setFirebaseData] = useState([]);
-	const [packageToFirebase, setPackageToFirebase] = useState({splitNumber: "", timeCreated: "", totalBill: "", totalPerPerson: ""});
+	const [packageToFirebase, setPackageToFirebase] = useState({});
 
+	// Firebase initialization
+	const database = getDatabase(firebase);
+	// dbRed will reference our database
+	const dbRef = ref(database);
 	useEffect(() => {
-		// Firebase initialization
-		const database = getDatabase(firebase);
-		// dbRed will reference our database
-		const dbRef = ref(database);
-		const forFirebaseData = [];
 		onValue(dbRef, (snapshot) => {
+			// 'resetting' the array so there are no duplicates each time the data is updated
+			const forFirebaseData = [];
+			setFirebaseData([]);
 			if (snapshot.exists()) {
 				const data = snapshot.val();
 
@@ -41,10 +43,27 @@ function App() {
 		setInputDisplay(!inputDisplay);
 	};
 
+	// Using one onChange function to handle multiple input
+	// Referenced: Handling Multiple Inputs with a Single onChange Handle in React by Jake Trent from pluralsight.com
 	const inputOnChange = (e) => {
-		setPackageToFirebase({totalBill: e.target.valueAsNumber});
-		console.log(e.target.valueAsNumber);
-		console.log(packageToFirebase);
+		// When a change occurs, the current value gets stored in a variable
+		const value = e.target.valueAsNumber;
+		setPackageToFirebase({
+			...packageToFirebase,
+			// Name of the input will be collected and used as a key and a the previously defined value will be stored
+			[e.target.name]: value,
+			// Adding additional information to packageToFirebase
+		});
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const timeGenerated = new Date();
+		const splitCalculation = (Math.ceil((packageToFirebase.totalBill / packageToFirebase.splitNumber) * 100) / 100).toFixed(2);
+		const forFirebase = {totalBill: packageToFirebase.totalBill, splitNumber: packageToFirebase.splitNumber, timeCreated: timeGenerated.toDateString(), totalPerPerson: splitCalculation};
+		push(dbRef, forFirebase);
+		setPackageToFirebase({});
+		changeDisplay();
 	};
 
 	return (
@@ -59,7 +78,7 @@ function App() {
 			) : (
 				<>
 					<Header title="New bill" changeDisplay={changeDisplay} />
-					<BillForm inputOnChange={inputOnChange} />
+					<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
 				</>
 			)}
 		</div>
