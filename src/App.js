@@ -1,117 +1,55 @@
-import {useEffect, useState} from "react";
 import "./App.css";
-import HeaderMain from "./HeaderMain";
-import HeaderNewBill from "./HeaderNewBill";
-import FormNewBill from "./FormNewBill";
 import firebase from "./firebase";
-import {getDatabase, ref, push, get, onValue} from "firebase/database";
-import DisplayBill from "./DisplayBills";
+import {getDatabase, ref, push, onValue} from "firebase/database";
+import {useState, useEffect} from "react";
+import NavigationBar from "./NavigationBar";
+import Header from "./Header";
+import BillDisplay from "./BillDisplay";
+import AddButton from "./AddButton";
+import BillForm from "./BillForm";
+import SearchBar from "./SearchBar";
 
 function App() {
-	// *********************** useState Related Start
-	// State responsible for determine which UI to display for the user
-	const [inputDisplay, setInputDisplay] = useState(true);
-	const [userTotalBill, setUserTotalBill] = useState("");
-	const [userSplitNumber, setUserSplitNumber] = useState("");
-	const [billDataObject, setBillDataObject] = useState([]);
-	const [billSearchID, setBillSearchID] = useState("");
-	const [filteredBill, setFilteredBill] = useState([]);
-	// *********************** useState Related End
+	// useState
+	const [inputDisplay, setInputDisplay] = useState(false);
+	const [firebaseData, setFirebaseData] = useState({});
 
-	// *********************** Firebase RT Database related START
-	const database = getDatabase(firebase);
-	const dbRef = ref(database);
-	// *********************** Firebase RT Database related END
-
-	// Responsible for changing the UI
-	const changeInput = () => {
-		setInputDisplay(!inputDisplay);
-	};
-
-	// Responsible for the onSubmit action of the form
-	const handleBillSubmit = (e) => {
-		e.preventDefault();
-		const billInformation = {
-			totalBill: userTotalBill.totalBill,
-			splitNumber: userSplitNumber.splitNumber,
-			// Using Math.ceil so numbers will round up to prevent money from disapearing in scenarios such as: $1 / 3 = $0.33, $0.33 * 3 = $0.99. Where did the money goooo?
-			totalPerPerson: `${(Math.ceil((userTotalBill.totalBill / userSplitNumber.splitNumber) * 100) / 100).toFixed(2)}`,
-			timeCreated: `${new Date()}`,
-		};
-		push(dbRef, billInformation);
-		changeInput();
-	};
-
-	// Responsible for collecting the information on the bill
-	const collectTotalBill = (e) => {
-		setUserTotalBill({
-			// Rounding inacurracy will not be present because form will prevent user from inputing more than 2 decimals thus no rounding or truncating necessary here.
-			totalBill: e.target.valueAsNumber.toFixed(2),
-		});
-	};
-
-	// Responsible for collecting the information on the number of split of the bill
-	const collectUserSplit = (e) => {
-		setUserSplitNumber({
-			splitNumber: e.target.valueAsNumber,
-		});
-	};
-
-	// When user lands on the home screen, app will automatically retrieve the database data and store it in the previousBill state
-
+	// Retrieve data from Firebase
 	useEffect(() => {
-		const billDataContainer = [];
+		// Firebase initialization
+		const database = getDatabase(firebase);
+		const dbRef = ref(database);
+
 		onValue(dbRef, (snapshot) => {
 			if (snapshot.exists()) {
-				const data = snapshot.val();
-
-				for (let key in data) {
-					const billData = [];
-					billData.push(key);
-					billData.push(data[key].timeCreated);
-					billData.push(data[key].totalBill);
-					billData.push(data[key].splitNumber);
-					billData.push(data[key].totalPerPerson);
-					billDataContainer.push(billData);
-				}
-				setBillDataObject(billDataContainer);
+				// const data = snapshot.val();
+				// setFirebaseData(data);
+				// console.log(firebaseData);
+				console.log(snapshot.val());
 			} else {
-				console.log("No data");
+				console.log("no data");
 			}
 		});
+	}, []);
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [inputDisplay]);
-
-	// Responsible for processing the search request
-	const handleBillSearch = (e) => {
-		e.preventDefault();
-		const copyOfBillDataObject = [...billDataObject];
-		const tempFilteredBills = copyOfBillDataObject.filter((bills) => {
-			return bills[0] === billSearchID;
-		});
-		setFilteredBill(tempFilteredBills);
-		console.log(filteredBill);
-	};
-
-	const collectSearchID = (e) => {
-		console.log(e.target.value);
-		console.log(e);
-		setBillSearchID(e.target.value);
+	// Flips inputDisplay from false to true
+	const changeDisplay = () => {
+		setInputDisplay(!inputDisplay);
 	};
 
 	return (
 		<div className="App wrapper">
-			{inputDisplay ? (
+			<NavigationBar inputDisplay={inputDisplay} changeDisplay={changeDisplay} />
+			{!inputDisplay ? (
 				<>
-					<HeaderMain changeDisplay={changeInput} handleBillSearch={handleBillSearch} collectSearchID={collectSearchID} />
-					<DisplayBill billDataObject={billDataObject} billSearchID={billSearchID} filteredBill={filteredBill} />
+					<Header title="Split My Bill" changeDisplay={changeDisplay} /> <SearchBar />
+					<BillDisplay firebaseData={firebaseData} />
+					<AddButton changeDisplay={changeDisplay} />
 				</>
 			) : (
 				<>
-					<HeaderNewBill changeDisplay={changeInput} />
-					<FormNewBill handleBillSubmit={handleBillSubmit} collectTotalBill={collectTotalBill} collectUserSplit={collectUserSplit} />
-					<DisplayBill billDataObject={billDataObject} billSearchID={billSearchID} filteredBill={filteredBill} />
+					<Header title="New bill" changeDisplay={changeDisplay} />
+					<BillForm />
 				</>
 			)}
 		</div>
