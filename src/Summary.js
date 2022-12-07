@@ -3,12 +3,12 @@ import {useEffect} from "react";
 const Summary = ({billSearch, billSearchResult}) => {
 	useEffect(() => {
 		billSearch();
-	}, [billSearch]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<ul className="bill-list">
 			{billSearchResult.map((data) => {
-				// console.log(data);
 				return (
 					<li className="bill-container" key={data.key}>
 						<p>Bill ID: {data.key}</p>

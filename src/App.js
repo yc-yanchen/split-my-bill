@@ -18,7 +18,7 @@ function App() {
 	const [packageToFirebase, setPackageToFirebase] = useState({});
 	const [billID, setBillID] = useState("");
 	const [billSearchResult, setBillSearchResult] = useState([]);
-	// const [searchError, setSearchError] = useState(false);
+	const [searchError, setSearchError] = useState(false);
 
 	// Firebase initialization
 	const database = getDatabase(firebase);
@@ -80,7 +80,7 @@ function App() {
 		setPackageToFirebase({});
 		// Setting the key of the most recently upload to a state so that we could search it later
 		setBillID(uploadToFirebase._path.pieces_[0]);
-
+		// billSearch();
 		changeSummary();
 	};
 
@@ -96,11 +96,9 @@ function App() {
 			setBillSearchResult([]);
 		}
 
-		// if (e.target.value > 0) {
-		// 	setSearching(true);
-		// } else {
-		// 	setSearching(false);
-		// }
+		if (e.target.value.length == 20) {
+			billSearch();
+		}
 	};
 
 	const handleSearch = (e) => {
@@ -121,11 +119,12 @@ function App() {
 
 		// Sets search error to either true or false depending the result from the array filter. true for an incorrect bill ID entered.
 
-		// if (!billSearchResult.key) {
-		// 	setSearchError(true);
-		// } else {
-		// 	setSearchError(false);
-		// }
+		if (filteredData.length == 0 && billID.length == 20) {
+			setSearchError(true);
+		} else {
+			setSearchError(false);
+		}
+		console.log(searchError);
 	};
 
 	return (
@@ -140,7 +139,7 @@ function App() {
 						{billID.length < 20 ? (
 							<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
 						) : (
-							<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
+							<>{searchError === false ? <Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} /> : <p>Please check your bill ID and search again</p>}</>
 						)}
 					</main>
 
