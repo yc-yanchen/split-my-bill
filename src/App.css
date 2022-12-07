@@ -528,6 +528,8 @@ option {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
+	margin-bottom: 16px;
+	min-height: 90vh;
 }
 
 .bill-container {
@@ -600,7 +602,7 @@ footer {
 	justify-content: center;
 	align-items: center;
 	width: 100vw;
-position: fixed;
+position: relative;
 bottom:0px;
 
 }
