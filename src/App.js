@@ -41,7 +41,7 @@ function App() {
 				console.log("no data");
 			}
 		});
-	}, []);
+	}, [dbRef]);
 
 	// Flips inputDisplay from false to true
 	const changeDisplay = () => {
@@ -111,7 +111,7 @@ function App() {
 		const copyOfFirebaseData = [...firebaseData];
 		// Looks for bills with matching bill ID which is stored in the billID state
 		const filteredData = copyOfFirebaseData.filter((oneBill) => {
-			return oneBill.key == billID;
+			return oneBill.key === billID;
 		});
 
 		// Sets search error to either true or false depending the result from the array filter. true for an incorrect bill ID entered.
