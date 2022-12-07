@@ -51,10 +51,8 @@ function App() {
 			setSummaryDisplay(!summaryDisplay);
 		}
 		// Reset the state so that the information doesn't carry over when the user goes back to the home screen
-
-		if (billSearchResult === true) {
-			setBillSearchResult([]);
-		}
+		setBillSearchResult([]);
+		setBillID("");
 	};
 
 	// Using one onChange function to handle multiple input
@@ -94,14 +92,19 @@ function App() {
 	const searchOnChange = (e) => {
 		setBillID(e.target.value);
 
-		if (billID.length < 20) {
+		if (e.target.value.length < 20) {
 			setBillSearchResult([]);
 		}
+
+		// if (e.target.value > 0) {
+		// 	setSearching(true);
+		// } else {
+		// 	setSearching(false);
+		// }
 	};
 
 	const handleSearch = (e) => {
 		e.preventDefault();
-		console.log(billID);
 		billSearch();
 	};
 
@@ -114,14 +117,15 @@ function App() {
 			return oneBill.key === billID;
 		});
 
-		// Sets search error to either true or false depending the result from the array filter. true for an incorrect bill ID entered.
 		setBillSearchResult(filteredData);
+
+		// Sets search error to either true or false depending the result from the array filter. true for an incorrect bill ID entered.
+
 		if (!billSearchResult.key) {
 			setSearchError(true);
 		} else {
 			setSearchError(false);
 		}
-		console.log(searchError);
 	};
 
 	return (
@@ -130,8 +134,16 @@ function App() {
 			{!inputDisplay ? (
 				<>
 					<Header title="Split My Bill" changeDisplay={changeDisplay} />
-					<SearchBar handleSearch={handleSearch} searchOnChange={searchOnChange} />
-					<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+
+					<main>
+						<SearchBar handleSearch={handleSearch} searchOnChange={searchOnChange} />
+						{billID.length < 20 ? (
+							<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+						) : (
+							<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
+						)}
+					</main>
+
 					<AddButton changeDisplay={changeDisplay} />
 				</>
 			) : (
@@ -139,12 +151,16 @@ function App() {
 					{!summaryDisplay ? (
 						<>
 							<Header title="New Bill" changeDisplay={changeDisplay} />
-							<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
+							<main>
+								<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
+							</main>
 						</>
 					) : (
 						<>
 							<Header title="Bill Summary" changeDisplay={changeDisplay} />
-							<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
+							<main>
+								<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
+							</main>
 						</>
 					)}
 				</>
