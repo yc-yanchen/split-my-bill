@@ -11,7 +11,7 @@ const BillDisplay = (props) => {
 							</div>
 							<div className="card-header-text">
 								<h3>Bill ID: {bill.key}</h3>
-								<p>Time Created: {bill.timeCreated}</p>
+								<p>{bill.timeCreated}</p>
 							</div>
 						</div>
 						<div className="card-body-container">

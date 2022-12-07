@@ -181,7 +181,10 @@ function App() {
 						<SearchBar handleSearch={handleSearch} searchOnChange={searchOnChange} />
 						{/* If the search for is less than 20 characters long, display all previous bills, otherwise, display the search results screen */}
 						{billID.length < 20 ? (
-							<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+							<>
+								<h2>Previous bills</h2>
+								<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+							</>
 						) : (
 							<>
 								{/* When no errors are present during the search, the searched bill will be displayed. If error is present, a message will be displayed alerting user to check their bill ID */}
