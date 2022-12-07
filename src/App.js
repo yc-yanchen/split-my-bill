@@ -18,6 +18,7 @@ function App() {
 	const [packageToFirebase, setPackageToFirebase] = useState({});
 	const [billID, setBillID] = useState("");
 	const [billSearchResult, setBillSearchResult] = useState([]);
+	const [searchError, setSearchError] = useState(false);
 
 	// Firebase initialization
 	const database = getDatabase(firebase);
@@ -93,7 +94,7 @@ function App() {
 	const searchOnChange = (e) => {
 		setBillID(e.target.value);
 
-		if (billID.length < 19) {
+		if (billID.length < 20) {
 			setBillSearchResult([]);
 		}
 	};
@@ -112,8 +113,15 @@ function App() {
 		const filteredData = copyOfFirebaseData.filter((oneBill) => {
 			return oneBill.key == billID;
 		});
-		console.log(filteredData);
+
+		// Sets search error to either true or false depending the result from the array filter. true for an incorrect bill ID entered.
 		setBillSearchResult(filteredData);
+		if (!billSearchResult.key) {
+			setSearchError(true);
+		} else {
+			setSearchError(false);
+		}
+		console.log(searchError);
 	};
 
 	return (

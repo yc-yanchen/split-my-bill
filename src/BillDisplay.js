@@ -1,7 +1,7 @@
 const BillDisplay = (props) => {
 	return (
 		<>
-			{!props.billID.length > 0 ? (
+			{props.billID.length < 20 ? (
 				<ul className="bill-list">
 					{props.firebaseData.map((bill) => {
 						return (
@@ -17,7 +17,7 @@ const BillDisplay = (props) => {
 				</ul>
 			) : (
 				<>
-					<h3>Please enter your bill ID</h3>
+					{/* <h3>Please enter your bill ID</h3> */}
 					<ul className="bill-list">
 						{props.billSearchResult.map((data) => {
 							console.log(data);
