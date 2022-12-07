@@ -19,6 +19,7 @@ function App() {
 	const [billID, setBillID] = useState("");
 	const [billSearchResult, setBillSearchResult] = useState([]);
 	const [searchError, setSearchError] = useState(false);
+	const [pushError, setPushError] = useState(false);
 
 	// Firebase initialization
 	const database = getDatabase(firebase);
@@ -34,7 +35,14 @@ function App() {
 				for (let key in data) {
 					// pushing the individual pieces of information from firebase to an object, which gets pushed to a state
 					// not using a for let in loop because it wouldn't allow us to push the key into our object
-					tempFirebaseData.push({key: key, splitNumber: data[key].splitNumber, timeCreated: data[key].timeCreated, totalBill: data[key].totalBill, totalPerPerson: data[key].totalPerPerson});
+					tempFirebaseData.push({
+						key: key,
+						splitNumber: data[key].splitNumber,
+						timeCreated: data[key].timeCreated,
+						totalBill: data[key].totalBill,
+						totalPerPerson: data[key].totalPerPerson,
+						emoji: data[key].emoji,
+					});
 				}
 				setFirebaseData(tempFirebaseData);
 			} else {
@@ -53,35 +61,46 @@ function App() {
 		// Reset the state so that the information doesn't carry over when the user goes back to the home screen
 		setBillSearchResult([]);
 		setBillID("");
+		setPushError(false);
 	};
 
 	// Using one onChange function to handle multiple input
 	// Referenced: Handling Multiple Inputs with a Single onChange Handle in React by Jake Trent from pluralsight.com
 	const inputOnChange = (e) => {
 		// When a change occurs, the current value gets stored in a variable
-		const value = e.target.valueAsNumber;
+		const value = e.target.value;
 		setPackageToFirebase({
 			...packageToFirebase,
 			// Name of the input will be collected and used as a key and a the previously defined value will be stored
 			[e.target.name]: value,
-			// Adding additional information to packageToFirebase
 		});
+		// console.log(e.target);
 	};
 
 	// Create an object called forFirebase which contains the information we want to send to Firebase when the submit button is pressed
 	const handleSubmit = (e) => {
-		e.preventDefault();
-		const timeGenerated = new Date();
-		const splitCalculation = (Math.ceil((packageToFirebase.totalBill / packageToFirebase.splitNumber) * 100) / 100).toFixed(2);
-		const forFirebase = {totalBill: packageToFirebase.totalBill, splitNumber: packageToFirebase.splitNumber, timeCreated: timeGenerated.toDateString(), totalPerPerson: splitCalculation};
-		const uploadToFirebase = push(dbRef, forFirebase);
+		try {
+			e.preventDefault();
+			const timeGenerated = new Date();
+			const splitCalculation = (Math.ceil((packageToFirebase.totalBill / packageToFirebase.splitNumber) * 100) / 100).toFixed(2);
+			const forFirebase = {
+				totalBill: packageToFirebase.totalBill,
+				splitNumber: packageToFirebase.splitNumber,
+				timeCreated: timeGenerated.toDateString(),
+				totalPerPerson: splitCalculation,
+				emoji: packageToFirebase.emoji,
+			};
+			const uploadToFirebase = push(dbRef, forFirebase);
 
-		// Empty the packageToFirebase state so it's ready for the next upload
-		setPackageToFirebase({});
-		// Setting the key of the most recently upload to a state so that we could search it later
-		setBillID(uploadToFirebase._path.pieces_[0]);
-		// billSearch();
-		changeSummary();
+			// Empty the packageToFirebase state so it's ready for the next upload
+			setPackageToFirebase({});
+			// Setting the key of the most recently upload to a state so that we could search it later
+			setBillID(uploadToFirebase._path.pieces_[0]);
+			// billSearch();
+			changeSummary();
+		} catch (error) {
+			setPushError(true);
+		}
 	};
 
 	// Flips the summaryDisplay from false to true
@@ -139,7 +158,16 @@ function App() {
 						{billID.length < 20 ? (
 							<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
 						) : (
-							<>{searchError === false ? <Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} /> : <p>Please check your bill ID and search again</p>}</>
+							<>
+								{searchError === false ? (
+									<>
+										<h3>Search result</h3>
+										<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
+									</>
+								) : (
+									<p>Please check your bill ID and search again</p>
+								)}
+							</>
 						)}
 					</main>
 
@@ -151,13 +179,17 @@ function App() {
 						<>
 							<Header title="New Bill" changeDisplay={changeDisplay} />
 							<main>
-								<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
+								<>
+									{pushError ? <p className="text-red">Please select an icon</p> : null}
+									<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
+								</>
 							</main>
 						</>
 					) : (
 						<>
 							<Header title="Bill Summary" changeDisplay={changeDisplay} />
 							<main>
+								<h2>Use the bill ID to access your bill in the future!</h2>
 								<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
 							</main>
 						</>

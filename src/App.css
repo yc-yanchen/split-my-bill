@@ -295,7 +295,7 @@ a,
 p,
 li,
 input,
-button {
+button, option, select,label {
 	font-size: 1.6rem;
 	font-weight: 400;
 	padding: 0;
@@ -306,6 +306,13 @@ button {
 
 .material-symbols-outlined {
 	font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.text-red {
+	font-weight: 500;
+	color: red;
+	text-align: center;
+	margin-bottom: 16px;
 }
 /* *****************GENERAL STYLING END***************** */
 
@@ -344,6 +351,18 @@ button span {
 	bottom: 24px;
 	right: 24px;
 }
+
+.button-submit {
+	font-family: 'Roboto', sans-serif;;
+	font-weight: 500;
+	border-radius: 48px;
+	align-self: flex-end;
+	background-color: var(--highlight);
+	width: 120px;
+	/* float shadow */
+	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
+	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
+}
 /* *****************BUTTON and SYMBOL STYLING END***************** */
 
 /**************************************/
@@ -353,11 +372,11 @@ header {
 	justify-content: center;
 	align-items: center;
 	gap: 24px;
-	margin: 6vh 0;
+	margin: 5vh 0;
 }
 
 h1 {
-	font-size: 4rem;
+	font-size: 4.8rem;
 	font-weight: 400;
 }
 
@@ -382,9 +401,6 @@ h1 {
 	border-top-right-radius: 24px;
 }
 
-input:focus {
-	outline: none;
-}
 
 .search-bar button {
 	height: 48px;
@@ -442,15 +458,7 @@ nav {
 ;
 }
 
-.button-submit {
-	border-radius: 4px;
-	align-self: flex-end;
-	background-color: var(--highlight);
-	width: 120px;
-	/* float shadow */
-	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
-	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
-}
+
 
 /**************************************/
 .bill-list {
@@ -469,8 +477,64 @@ main h2 {
 	font-size: 2.2rem;
 	text-align: left;
 	margin-bottom: 16px;
+	text-align: center;
 }
 /******************summary********************/
 .bill-ID {
 	font-size: 4rem;
+}
+/******************SelectEmoji********************/
+select {
+	font-size: 2.2rem;
+	background-color: rgba(0,0,0,0);
+	border:none;
+	text-align: center;
+	width: 100px;
+	height: 48px;
+	border: 1px solid var(--outline);
+	border-radius: 4px;
+}
+option {
+	font-size: 2.2rem;
+}
+
+.emoji-flex-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+gap: 24px;
+
+	
+}
+
+.emoji-icon {
+	background-color: var(--highlight);
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.emoji-icon p {
+	font-size: 3rem;
+}
+
+.card-header {
+display: flex;
+justify-content: flex-start;
+align-items: center;
+gap:12px;
+margin-bottom: 16px
+}
+
+.card-header h3 {
+	font-weight: ;
+	font-size: 1.8rem;
+}
+
+.card-body-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }

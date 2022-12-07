@@ -8,14 +8,25 @@ const Summary = ({billSearch, billSearchResult}) => {
 
 	return (
 		<ul className="bill-list">
-			{billSearchResult.map((data) => {
+			{billSearchResult.map((bill) => {
 				return (
-					<li className="bill-container" key={data.key}>
-						<p>Bill ID: {data.key}</p>
-						<p>Time Created: {data.timeCreated}</p>
-						<p>Bill Total: ${data.totalBill}</p>
-						<p>Number of Split: {data.splitNumber}</p>
-						<p>Total Per Person: ${data.totalPerPerson}</p>
+					<li className="bill-container" key={bill.key}>
+						<div className="card-header">
+							<div className="emoji-icon">
+								<p>{bill.emoji}</p>
+							</div>
+							<div className="card-header-text">
+								<h3>Bill ID: {bill.key}</h3>
+								<p>Time Created: {bill.timeCreated}</p>
+							</div>
+						</div>
+						<div className="card-body-container">
+							<div className="card-body-container-text">
+								<p>Bill Total: ${bill.totalBill}</p>
+								<p>Number of Split: {bill.splitNumber}</p>
+							</div>
+							<p>Total Per Person: ${bill.totalPerPerson}</p>
+						</div>
 					</li>
 				);
 			})}
