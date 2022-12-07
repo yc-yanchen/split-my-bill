@@ -17,21 +17,21 @@ const Summary = ({billSearch, billSearchResult, copyBill}) => {
 								<p>{bill.emoji}</p>
 							</div>
 							<div className="card-header-text">
-								<div className="bill-id-container">
+								<div className="bill-id-container copy-button">
 									<h3>Bill ID: {bill.key}</h3>
 									<span className="material-symbols-outlined" onClick={copyBill}>
 										content_copy
 									</span>
 								</div>
-								<p>Time Created: {bill.timeCreated}</p>
+								<p>{bill.timeCreated}</p>
 							</div>
 						</div>
 						<div className="card-body-container">
 							<div className="card-body-container-text">
 								<p>Bill Total: ${bill.totalBill}</p>
 								<p>Number of Split: {bill.splitNumber}</p>
+								<p>Total Per Person: ${bill.totalPerPerson}</p>
 							</div>
-							<p>Total Per Person: ${bill.totalPerPerson}</p>
 						</div>
 					</li>
 				);

@@ -254,17 +254,20 @@ template {
 
 /* *****************COLOUR STYLING START***************** */
 :root {
-	--highlight: #ffdcc0;
-	--on-highlight: rgb(45 22 0);
-	--card-background: rgb(247 242 242);
-	--regular-text: rgb(30 27 23);
+	--highlight: rgb(199 132 127);
+	--on-highlight: rgb(255,255,255);
+	--card-background: rgb(237 227 225);
+	--regular-text: rgb(93 85 82);
 	--outline: rgb(170, 170, 170);
+	--background: rgb(250 250 250);
+	--bright: rgb(224 179 143);
 }
 /* *****************COLOUR STYLING END***************** */
 
 /* *****************GENERAL STYLING START***************** */
 html {
 	font-size: 62.5%;
+	background-color: var(--background);
 }
 
 body {
@@ -338,9 +341,8 @@ button {
 	border: none;
 	cursor: pointer;
 }
-.icon span,
-button span {
-	color: var(--on-highlight);
+.icon span {
+	color: var(--regular-text);
 }
 
 .button-style {
@@ -366,7 +368,10 @@ button span {
 	position: fixed;
 	bottom: 24px;
 	right: 24px;
+	color: var(--on-highlight);
 }
+
+
 
 .button-submit {
 	font-family: "Roboto", sans-serif;
@@ -378,6 +383,7 @@ button span {
 	/* float shadow */
 	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
+	color: var(--on-highlight);
 }
 /******************BUTTON and SYMBOL STYLING END******************/
 
@@ -517,7 +523,7 @@ option {
 .bill-container {
 	background-color: var(--card-background);
 	border-radius: 16px;
-	padding: 24px;
+	padding: 24px 16px;
 	text-align: left;
 }
 .bill-ID {
@@ -526,7 +532,7 @@ option {
 .card-header {
 	display: flex;
 	justify-content: flex-start;
-	align-items: center;
+	/* align-items: center; */
 	gap: 12px;
 	margin-bottom: 16px;
 }
@@ -538,18 +544,31 @@ font-weight: 500;
 
 .card-body-container {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.card-body-container-text {
+	display: flex;
+	gap: 48px;
+	flex-grow: 0;
+	flex-shrink: 0;
 }
 
 .bill-id-container {
 	display: flex;
+
 	align-items: center;
-	gap: 8px;
+	gap: 16px;
 }
 
 .bill-id-container span {
 	cursor: pointer;
 }
 
+
+.copy-button {
+	color: var(--highlight);
+}
 /******************Card STYLING END********************/

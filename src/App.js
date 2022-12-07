@@ -100,7 +100,7 @@ function App() {
 			const splitCalculation = (Math.ceil((packageToFirebase.totalBill / packageToFirebase.splitNumber) * 100) / 100).toFixed(2);
 			// Packaging up an object to be sent to Firebase
 			const forFirebase = {
-				totalBill: packageToFirebase.totalBill,
+				totalBill: `${((packageToFirebase.totalBill * 100) / 100).toFixed(2)}`,
 				splitNumber: packageToFirebase.splitNumber,
 				timeCreated: timeGenerated.toDateString(),
 				totalPerPerson: splitCalculation,
@@ -182,8 +182,14 @@ function App() {
 						{/* If the search for is less than 20 characters long, display all previous bills, otherwise, display the search results screen */}
 						{billID.length < 20 ? (
 							<>
-								<h2>Previous bills</h2>
-								<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+								{firebaseData.length === 0 ? (
+									<h2>Currently no bills, let's create one!</h2>
+								) : (
+									<>
+										<h2>Previous bills</h2>
+										<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+									</>
+								)}
 							</>
 						) : (
 							<>

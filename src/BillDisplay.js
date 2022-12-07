@@ -18,8 +18,8 @@ const BillDisplay = (props) => {
 							<div className="card-body-container-text">
 								<p>Bill Total: ${bill.totalBill}</p>
 								<p>Number of Split: {bill.splitNumber}</p>
+								<p>Total Per Person: ${bill.totalPerPerson}</p>
 							</div>
-							<p>Total Per Person: ${bill.totalPerPerson}</p>
 						</div>
 					</li>
 				);
