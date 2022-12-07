@@ -3,7 +3,7 @@ import {useEffect} from "react";
 const Summary = ({billID, billSearch, billSearchResult}) => {
 	useEffect(() => {
 		billSearch(billID);
-	}, [billID]);
+	}, [billSearchResult]);
 
 	return (
 		<main>
