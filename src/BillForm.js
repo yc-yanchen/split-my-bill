@@ -1,5 +1,6 @@
 import SelectEmoji from "./SelectEmoji";
 
+// Component used to display the form for user to input their bill. All the number fields have a min and max number to prevent large numbers from breaking out of their elements when displayed later. Also to prevent division into infinity.
 const BillForm = ({inputOnChange, handleSubmit}) => {
 	return (
 		<form className="new-bill-form" onSubmit={handleSubmit}>

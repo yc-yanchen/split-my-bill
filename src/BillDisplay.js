@@ -1,6 +1,7 @@
 const BillDisplay = (props) => {
 	return (
 		<ul className="bill-list">
+			{/* Maps through the Firebase data to display all previous bills */}
 			{props.firebaseData.map((bill) => {
 				return (
 					<li className="bill-container" key={bill.key}>

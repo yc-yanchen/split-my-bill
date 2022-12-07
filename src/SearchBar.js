@@ -1,3 +1,5 @@
+// Search bar which has a min and max of twenty characters to search for a bill
+
 const SearchBar = (props) => {
 	return (
 		<form className="search-bar" onSubmit={props.handleSearch}>

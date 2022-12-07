@@ -11,14 +11,28 @@ import SearchBar from "./SearchBar";
 import Summary from "./Summary";
 
 function App() {
-	// useState
+	// useState for changing UI between the home screen and the form input screen
 	const [inputDisplay, setInputDisplay] = useState(false);
+
+	// useState for changing between the form input screen and the summary screen
 	const [summaryDisplay, setSummaryDisplay] = useState(false);
+
+	// useState to store new Firebase data
 	const [firebaseData, setFirebaseData] = useState([]);
+
+	// useState to locally package data to be sent to Firebase
 	const [packageToFirebase, setPackageToFirebase] = useState({});
+
+	// useState to store a single bill ID. This is automatically updated with the bill ID of new user bill and also when the user searches for a bill
 	const [billID, setBillID] = useState("");
+
+	// useState to store the filtered result from user search. Should only contain one array.
 	const [billSearchResult, setBillSearchResult] = useState([]);
+
+	// useState which determines the presence of an error related to a search
 	const [searchError, setSearchError] = useState(false);
+
+	// useState which determines the presence of an error related to a push to Firebase
 	const [pushError, setPushError] = useState(false);
 
 	// Firebase initialization
@@ -74,15 +88,17 @@ function App() {
 			// Name of the input will be collected and used as a key and a the previously defined value will be stored
 			[e.target.name]: value,
 		});
-		// console.log(e.target);
 	};
 
 	// Create an object called forFirebase which contains the information we want to send to Firebase when the submit button is pressed
 	const handleSubmit = (e) => {
 		try {
 			e.preventDefault();
+			// Add a time stamp to the push
 			const timeGenerated = new Date();
+			// Calculates the split cost. Will always round up to prevent missing money (ie. $10 / 3 = $3.33 => $3.33 * 3 = $9.99! Hey where did my money go??)
 			const splitCalculation = (Math.ceil((packageToFirebase.totalBill / packageToFirebase.splitNumber) * 100) / 100).toFixed(2);
+			// Packaging up an object to be sent to Firebase
 			const forFirebase = {
 				totalBill: packageToFirebase.totalBill,
 				splitNumber: packageToFirebase.splitNumber,
@@ -90,11 +106,12 @@ function App() {
 				totalPerPerson: splitCalculation,
 				emoji: packageToFirebase.emoji,
 			};
+			// Create an object containing the push information
 			const uploadToFirebase = push(dbRef, forFirebase);
 
 			// Empty the packageToFirebase state so it's ready for the next upload
 			setPackageToFirebase({});
-			// Setting the key of the most recently upload to a state so that we could search it later
+			// Setting the key of the most recent upload to a state so that we could search it later
 			setBillID(uploadToFirebase._path.pieces_[0]);
 			// billSearch();
 			changeSummary();
@@ -108,18 +125,21 @@ function App() {
 		setSummaryDisplay(!summaryDisplay);
 	};
 
+	// Detects change when user is using the search bar
 	const searchOnChange = (e) => {
 		setBillID(e.target.value);
 
+		// when the number of characters entered is less than 20, empty the search result (because 20 characters are needed to search for the bill)
 		if (e.target.value.length < 20) {
 			setBillSearchResult([]);
 		}
-
+		// automatically performs a search when 20 characters are detected in the search bar
 		if (e.target.value.length === 20) {
 			billSearch();
 		}
 	};
 
+	// incase the automatic search function above did not work, user can manually perform the search
 	const handleSearch = (e) => {
 		e.preventDefault();
 		billSearch();
@@ -137,31 +157,37 @@ function App() {
 		setBillSearchResult(filteredData);
 
 		// Sets search error to either true or false depending the result from the array filter. true for an incorrect bill ID entered.
-
 		if (filteredData.length === 0 && billID.length === 20) {
 			setSearchError(true);
 		} else {
 			setSearchError(false);
 		}
-		console.log(searchError);
+	};
+
+	// Function which allow user to copy the current bill ID to their clipboard
+	const copyBill = () => {
+		navigator.clipboard.writeText(billID);
 	};
 
 	return (
 		<div className="App wrapper">
 			<NavigationBar inputDisplay={inputDisplay} changeDisplay={changeDisplay} />
+
+			{/* Checks the inputDisplay state to determine whether to display the home screen or the form input screen */}
 			{!inputDisplay ? (
 				<>
 					<Header title="Split My Bill" changeDisplay={changeDisplay} />
-
 					<main>
 						<SearchBar handleSearch={handleSearch} searchOnChange={searchOnChange} />
+						{/* If the search for is less than 20 characters long, display all previous bills, otherwise, display the search results screen */}
 						{billID.length < 20 ? (
 							<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
 						) : (
 							<>
+								{/* When no errors are present during the search, the searched bill will be displayed. If error is present, a message will be displayed alerting user to check their bill ID */}
 								{searchError === false ? (
 									<>
-										<h3>Search result</h3>
+										<h2>Search result</h2>
 										<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
 									</>
 								) : (
@@ -171,15 +197,18 @@ function App() {
 						)}
 					</main>
 
+					{/* A floating add button which gives user access to the input form */}
 					<AddButton changeDisplay={changeDisplay} />
 				</>
 			) : (
 				<>
+					{/* Checks if user should be in the form input screen or the summary screen */}
 					{!summaryDisplay ? (
 						<>
 							<Header title="New Bill" changeDisplay={changeDisplay} />
 							<main>
 								<>
+									{/* Alerts user to pick an icon for their bill if they haven't picked one */}
 									{pushError ? <p className="text-red">Please select an icon</p> : null}
 									<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
 								</>
@@ -187,10 +216,11 @@ function App() {
 						</>
 					) : (
 						<>
+							{/* Summary screen */}
 							<Header title="Bill Summary" changeDisplay={changeDisplay} />
 							<main>
-								<h2>Use the bill ID to access your bill in the future!</h2>
-								<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
+								<h2>Use the Bill ID to access your bill in the future!</h2>
+								<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} copyBill={copyBill} />
 							</main>
 						</>
 					)}
