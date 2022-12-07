@@ -255,13 +255,14 @@ template {
 /* *****************COLOUR STYLING START***************** */
 :root {
 	--highlight: rgb(199 132 127);
-	--on-highlight: rgb(255,255,255);
+	--on-highlight: rgb(255, 255, 255);
 	--card-background: rgb(237 227 225);
 	--regular-text: rgb(93 85 82);
 	--outline: rgb(170, 170, 170);
 	--background: rgb(250 250 250);
 	--bright: rgb(224 179 143);
 }
+
 /* *****************COLOUR STYLING END***************** */
 
 /* *****************GENERAL STYLING START***************** */
@@ -333,6 +334,7 @@ main h2 {
 	margin-bottom: 16px;
 
 }
+
 /* *****************GENERAL STYLING END***************** */
 
 /* *****************BUTTON and SYMBOL STYLING START***************** */
@@ -341,6 +343,7 @@ button {
 	border: none;
 	cursor: pointer;
 }
+
 .icon span {
 	color: var(--regular-text);
 }
@@ -364,14 +367,13 @@ button {
 	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 }
+
 .button-bottom-float {
 	position: fixed;
-	bottom: 24px;
+	bottom: 48px;
 	right: 24px;
 	color: var(--on-highlight);
 }
-
-
 
 .button-submit {
 	font-family: "Roboto", sans-serif;
@@ -385,6 +387,7 @@ button {
 	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
 	color: var(--on-highlight);
 }
+
 /******************BUTTON and SYMBOL STYLING END******************/
 
 /******************Header STYLING START********************/
@@ -394,13 +397,14 @@ header {
 	justify-content: center;
 	align-items: center;
 	gap: 24px;
-	margin: 2vh 0 5vh 0;
+	margin: 1vh 0 5vh 0;
 }
 
 h1 {
 	font-size: 4.8rem;
 	font-weight: 400;
 }
+
 /******************Header STYLING END********************/
 /******************SearchBar STYLING START********************/
 .search-bar {
@@ -409,7 +413,7 @@ h1 {
 	justify-content: space-around;
 	align-items: center;
 	width: 100%;
-	background-color: white;
+	background-color: var(--on-highlight);
 	border-radius: 24px;
 	border: 1px solid var(--outline);
 	margin-bottom: 4vh;
@@ -436,6 +440,7 @@ h1 {
 	border-bottom-left-radius: 24px;
 	border-top-left-radius: 24px;
 }
+
 /******************SearchBar STYLING END********************/
 /******************Input form styling START********************/
 
@@ -461,6 +466,7 @@ h1 {
 	border: none;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
+	padding-left: 8px;
 }
 
 .new-bill-form .icon {
@@ -469,8 +475,8 @@ h1 {
 	justify-content: center;
 	height: 48px;
 	width: 48px;
-	border-bottom-left-radius: 4px;
-	border-top-left-radius: 4px;
+	border-right: 1px solid var(--outline);
+	border-radius: 4px;
 }
 
 /******************Input form styling END********************/
@@ -481,7 +487,7 @@ h1 {
 /******************SelectEmoji Form START********************/
 select {
 	font-size: 2.2rem;
-	background-color: rgba(0, 0, 0, 0);
+	background-color: var(--on-highlight);
 	border: none;
 	text-align: center;
 	width: 100px;
@@ -489,6 +495,7 @@ select {
 	border: 1px solid var(--outline);
 	border-radius: 4px;
 }
+
 option {
 	font-size: 2.2rem;
 }
@@ -509,9 +516,11 @@ option {
 	justify-content: center;
 	align-items: center;
 }
+
 .emoji-icon p {
 	font-size: 3rem;
 }
+
 /******************SelectEmoji Form END********************/
 
 /******************Card STYLING START********************/
@@ -520,15 +529,18 @@ option {
 	flex-direction: column;
 	gap: 12px;
 }
+
 .bill-container {
 	background-color: var(--card-background);
 	border-radius: 16px;
 	padding: 24px 16px;
 	text-align: left;
 }
+
 .bill-ID {
 	font-size: 4rem;
 }
+
 .card-header {
 	display: flex;
 	justify-content: flex-start;
@@ -538,7 +550,7 @@ option {
 }
 
 .card-header h3 {
-font-weight: 500;
+	font-weight: 500;
 	/* font-size: 1.8rem; */
 }
 
@@ -546,15 +558,22 @@ font-weight: 500;
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
-	flex-direction: column;
+
 }
 
 .card-body-container-text {
+	width: 50%;
 	display: flex;
-	gap: 48px;
+	flex-direction: column;
+	gap: 8px;
 	flex-grow: 0;
 	flex-shrink: 0;
+	padding: 0 0 0 8px;
+	font-size: 2rem;
+
 }
+
+
 
 .bill-id-container {
 	display: flex;
@@ -571,4 +590,22 @@ font-weight: 500;
 .copy-button {
 	color: var(--highlight);
 }
+
 /******************Card STYLING END********************/
+
+footer {
+	background-color: var(--highlight);
+	height: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+position: absolute;
+bottom:0px;
+
+}
+footer p {
+	font-weight: 500;
+	color: var(--on-highlight);
+	font-size: 1.8rem;
+}

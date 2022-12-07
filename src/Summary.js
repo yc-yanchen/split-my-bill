@@ -28,9 +28,14 @@ const Summary = ({billSearch, billSearchResult, copyBill}) => {
 						</div>
 						<div className="card-body-container">
 							<div className="card-body-container-text">
-								<p>Bill Total: ${bill.totalBill}</p>
-								<p>Number of Split: {bill.splitNumber}</p>
-								<p>Total Per Person: ${bill.totalPerPerson}</p>
+								<p>Total:</p>
+								<p>Split:</p>
+								<p>Total Per Person:</p>
+							</div>
+							<div className="card-body-container-text">
+								<p>${bill.totalBill}</p>
+								<p>{bill.splitNumber}</p>
+								<p>${bill.totalPerPerson}</p>
 							</div>
 						</div>
 					</li>

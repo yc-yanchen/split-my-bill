@@ -170,71 +170,76 @@ function App() {
 	};
 
 	return (
-		<div className="App wrapper">
-			<NavigationBar inputDisplay={inputDisplay} changeDisplay={changeDisplay} />
+		<div className="App">
+			<div className="wrapper">
+				<NavigationBar inputDisplay={inputDisplay} changeDisplay={changeDisplay} />
 
-			{/* Checks the inputDisplay state to determine whether to display the home screen or the form input screen */}
-			{!inputDisplay ? (
-				<>
-					<Header title="Split My Bill" changeDisplay={changeDisplay} />
-					<main>
-						<SearchBar handleSearch={handleSearch} searchOnChange={searchOnChange} />
-						{/* If the search for is less than 20 characters long, display all previous bills, otherwise, display the search results screen */}
-						{billID.length < 20 ? (
+				{/* Checks the inputDisplay state to determine whether to display the home screen or the form input screen */}
+				{!inputDisplay ? (
+					<>
+						<Header title="Split My Bill" changeDisplay={changeDisplay} />
+						<main>
+							<SearchBar handleSearch={handleSearch} searchOnChange={searchOnChange} />
+							{/* If the search for is less than 20 characters long, display all previous bills, otherwise, display the search results screen */}
+							{billID.length < 20 ? (
+								<>
+									{firebaseData.length === 0 ? (
+										<h2>Currently no bills, let's create one!</h2>
+									) : (
+										<>
+											<h2>Previous bills</h2>
+											<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+										</>
+									)}
+								</>
+							) : (
+								<>
+									{/* When no errors are present during the search, the searched bill will be displayed. If error is present, a message will be displayed alerting user to check their bill ID */}
+									{searchError === false ? (
+										<>
+											<h2>Search result</h2>
+											<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
+										</>
+									) : (
+										<p>Please check your bill ID and search again</p>
+									)}
+								</>
+							)}
+						</main>
+
+						{/* A floating add button which gives user access to the input form */}
+						<AddButton changeDisplay={changeDisplay} />
+					</>
+				) : (
+					<>
+						{/* Checks if user should be in the form input screen or the summary screen */}
+						{!summaryDisplay ? (
 							<>
-								{firebaseData.length === 0 ? (
-									<h2>Currently no bills, let's create one!</h2>
-								) : (
+								<Header title="New Bill" changeDisplay={changeDisplay} />
+								<main>
 									<>
-										<h2>Previous bills</h2>
-										<BillDisplay firebaseData={firebaseData} billID={billID} billSearchResult={billSearchResult} setBillSearchResult={setBillSearchResult} />
+										{/* Alerts user to pick an icon for their bill if they haven't picked one */}
+										{pushError ? <p className="text-red">Please select an icon</p> : null}
+										<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
 									</>
-								)}
+								</main>
 							</>
 						) : (
 							<>
-								{/* When no errors are present during the search, the searched bill will be displayed. If error is present, a message will be displayed alerting user to check their bill ID */}
-								{searchError === false ? (
-									<>
-										<h2>Search result</h2>
-										<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} />
-									</>
-								) : (
-									<p>Please check your bill ID and search again</p>
-								)}
+								{/* Summary screen */}
+								<Header title="Bill Summary" changeDisplay={changeDisplay} />
+								<main>
+									<h2>Use the Bill ID to access your bill in the future!</h2>
+									<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} copyBill={copyBill} />
+								</main>
 							</>
 						)}
-					</main>
-
-					{/* A floating add button which gives user access to the input form */}
-					<AddButton changeDisplay={changeDisplay} />
-				</>
-			) : (
-				<>
-					{/* Checks if user should be in the form input screen or the summary screen */}
-					{!summaryDisplay ? (
-						<>
-							<Header title="New Bill" changeDisplay={changeDisplay} />
-							<main>
-								<>
-									{/* Alerts user to pick an icon for their bill if they haven't picked one */}
-									{pushError ? <p className="text-red">Please select an icon</p> : null}
-									<BillForm inputOnChange={inputOnChange} handleSubmit={handleSubmit} />
-								</>
-							</main>
-						</>
-					) : (
-						<>
-							{/* Summary screen */}
-							<Header title="Bill Summary" changeDisplay={changeDisplay} />
-							<main>
-								<h2>Use the Bill ID to access your bill in the future!</h2>
-								<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} copyBill={copyBill} />
-							</main>
-						</>
-					)}
-				</>
-			)}
+					</>
+				)}
+			</div>
+			<footer>
+				<p>Created at Juno College of Technology</p>
+			</footer>
 		</div>
 	);
 }
