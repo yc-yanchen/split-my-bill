@@ -1,16 +1,16 @@
 import {useEffect} from "react";
 
-const Summary = (props) => {
+const Summary = ({billID, billSearch, billSearchResult}) => {
 	useEffect(() => {
-		props.billSearch(props.billID);
-	}, []);
+		billSearch(billID);
+	}, [billID]);
 
 	return (
 		<main>
 			<h2>Thank you for submitting your bill. Here is your bill information:</h2>
 
 			<ul className="bill-list">
-				{props.billSearchResult.map((data) => {
+				{billSearchResult.map((data) => {
 					console.log(data);
 					return (
 						<li className="bill-container" key={data.key}>
