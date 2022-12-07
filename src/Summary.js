@@ -1,9 +1,9 @@
 import {useEffect} from "react";
 
-const Summary = ({billID, billSearch, billSearchResult}) => {
+const Summary = ({billSearch, billSearchResult}) => {
 	useEffect(() => {
-		billSearch(billID);
-	}, [billSearchResult]);
+		billSearch();
+	}, []);
 
 	return (
 		<main>
