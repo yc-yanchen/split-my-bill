@@ -96,7 +96,7 @@ function App() {
 			setBillSearchResult([]);
 		}
 
-		if (e.target.value.length == 20) {
+		if (e.target.value.length === 20) {
 			billSearch();
 		}
 	};
@@ -119,7 +119,7 @@ function App() {
 
 		// Sets search error to either true or false depending the result from the array filter. true for an incorrect bill ID entered.
 
-		if (filteredData.length == 0 && billID.length == 20) {
+		if (filteredData.length === 0 && billID.length === 20) {
 			setSearchError(true);
 		} else {
 			setSearchError(false);
