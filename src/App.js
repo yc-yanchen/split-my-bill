@@ -35,6 +35,8 @@ function App() {
 	// useState which determines the presence of an error related to a push to Firebase
 	const [pushError, setPushError] = useState(false);
 
+	const [databaseStatus, setDatabaseStatus] = useState(false);
+
 	// Firebase initialization
 	const database = getDatabase(firebase);
 	// dbRed will reference our database
@@ -113,10 +115,10 @@ function App() {
 			setPackageToFirebase({});
 			// Setting the key of the most recent upload to a state so that we could search it later
 			setBillID(uploadToFirebase._path.pieces_[0]);
-			// billSearch();
+			setDatabaseStatus(false);
 			changeSummary();
 		} catch (error) {
-			setPushError(true);
+			setDatabaseStatus(true);
 		}
 	};
 
@@ -183,7 +185,7 @@ function App() {
 							{/* If the search for is less than 20 characters long, display all previous bills, otherwise, display the search results screen */}
 							{billID.length < 20 ? (
 								<>
-									{firebaseData.length === 0 ? (
+									{databaseStatus ? (
 										<h2>Currently no bills, let's create one!</h2>
 									) : (
 										<>

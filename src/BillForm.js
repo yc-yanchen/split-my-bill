@@ -23,7 +23,7 @@ const BillForm = ({inputOnChange, handleSubmit}) => {
 				</div>
 				<input type="number" id="split-number" step={1} min="1" placeholder="Number of split" required onChange={inputOnChange} name="splitNumber" max={999} />
 			</div>
-			<button type="submit" className="button-submit button-style">
+			<button type="submit" className="button-submit button-style coloured-button-style">
 				Submit
 			</button>
 		</form>

@@ -17,12 +17,7 @@ const Summary = ({billSearch, billSearchResult, copyBill}) => {
 								<p>{bill.emoji}</p>
 							</div>
 							<div className="card-header-text">
-								<div className="bill-id-container copy-button">
-									<h3>Bill ID: {bill.key}</h3>
-									<span className="material-symbols-outlined" onClick={copyBill}>
-										content_copy
-									</span>
-								</div>
+								<h3>Bill ID: {bill.key}</h3>
 								<p>{bill.timeCreated}</p>
 							</div>
 						</div>
@@ -38,6 +33,10 @@ const Summary = ({billSearch, billSearchResult, copyBill}) => {
 								<p>${bill.totalPerPerson}</p>
 							</div>
 						</div>
+
+						<button className="button-copy coloured-button-style" onClick={copyBill}>
+							Copy Bill ID to Clipboard
+						</button>
 					</li>
 				);
 			})}

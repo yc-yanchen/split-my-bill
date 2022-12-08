@@ -1,7 +1,7 @@
 const AddButton = ({changeDisplay}) => {
 	return (
 		<button onClick={changeDisplay}>
-			<span className="material-symbols-outlined button-style button-rounded button-bottom-float ">add</span>
+			<span className="material-symbols-outlined coloured-button-style button-bottom-float ">add</span>
 		</button>
 	);
 };

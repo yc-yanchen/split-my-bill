@@ -332,47 +332,60 @@ main h2 {
 	font-size: 2rem;
 	text-align: left;
 	margin-bottom: 16px;
-
 }
 
 /* *****************GENERAL STYLING END***************** */
 
 /* *****************BUTTON and SYMBOL STYLING START***************** */
+
 button {
 	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	cursor: pointer;
 }
 
+.button-copy {
+	height: 48px;
+	width: 100%;
+	border-radius: 48px;
+}
+
+.coloured-button-style {
+	height: 48px;
+	background-color: var(--highlight);
+	color: var(--on-highlight);
+	-webkit-box-shadow: 0px 4px 17px -16px rgba(0, 0, 0, 0.69);
+	box-shadow: 0px 4px 17px -16px rgba(0, 0, 0, 0.69);
+	transition: background-color 0.1s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.coloured-button-style:hover,
+.coloured-button-style:focus {
+	/* float shadow */
+	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
+	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
+	background-color: var(--bright);
+}
+
 .icon span {
 	color: var(--regular-text);
 }
 
-.button-style {
-	height: 48px;
+.button-bottom-float {
 	width: 48px;
 	padding: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+
 	/* Using content-box to add invisible padding to button for accessibility purposes */
 	box-sizing: content-box;
 	padding: 4px;
-}
 
-.button-rounded {
-	border-radius: 16px;
-	background-color: var(--highlight);
-	/* float shadow */
-	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
-	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
-}
-
-.button-bottom-float {
 	position: fixed;
 	bottom: 48px;
 	right: 24px;
-	color: var(--on-highlight);
+	border-radius: 16px;
 }
 
 .button-submit {
@@ -380,12 +393,7 @@ button {
 	font-weight: 500;
 	border-radius: 48px;
 	align-self: flex-end;
-	background-color: var(--highlight);
 	width: 120px;
-	/* float shadow */
-	-webkit-box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
-	box-shadow: 0px 8px 17px -16px rgba(0, 0, 0, 0.69);
-	color: var(--on-highlight);
 }
 
 /******************BUTTON and SYMBOL STYLING END******************/
@@ -481,9 +489,6 @@ h1 {
 
 /******************Input form styling END********************/
 
-
-
-
 /******************SelectEmoji Form START********************/
 select {
 	font-size: 2.2rem;
@@ -536,7 +541,11 @@ option {
 	background-color: var(--card-background);
 	border-radius: 16px;
 	padding: 24px 16px;
-	text-align: left;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	-webkit-box-shadow: 0px 4px 17px -16px rgba(0, 0, 0, 0.69);
+		box-shadow: 0px 4px 17px -16px rgba(0, 0, 0, 0.69);
 }
 
 .bill-ID {
@@ -546,21 +555,21 @@ option {
 .card-header {
 	display: flex;
 	justify-content: flex-start;
-	/* align-items: center; */
 	gap: 12px;
-	margin-bottom: 16px;
 }
 
 .card-header h3 {
 	font-weight: 500;
-	/* font-size: 1.8rem; */
 }
 
 .card-body-container {
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
+}
 
+.card-body-container-text:first-child p {
+	font-weight: 500;
 }
 
 .card-body-container-text {
@@ -572,25 +581,6 @@ option {
 	flex-shrink: 0;
 	padding: 0 0 0 8px;
 	font-size: 2rem;
-
-}
-
-
-
-.bill-id-container {
-	display: flex;
-
-	align-items: center;
-	gap: 16px;
-}
-
-.bill-id-container span {
-	cursor: pointer;
-}
-
-
-.copy-button {
-	color: var(--highlight);
 }
 
 /******************Card STYLING END********************/
@@ -602,9 +592,8 @@ footer {
 	justify-content: center;
 	align-items: center;
 	width: 100vw;
-position: fixed;
-bottom:0px;
-
+	position: fixed;
+	bottom: 0px;
 }
 footer p {
 	font-weight: 500;
