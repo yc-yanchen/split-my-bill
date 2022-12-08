@@ -332,6 +332,7 @@ main h2 {
 	font-size: 2rem;
 	text-align: left;
 	margin-bottom: 16px;
+	font-family: 'Open Sans', sans-serif;
 }
 
 /* *****************GENERAL STYLING END***************** */
@@ -342,6 +343,7 @@ button {
 	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	cursor: pointer;
+	/* font-family: 'Open Sans', sans-serif; */
 }
 
 .button-copy {
@@ -389,7 +391,6 @@ button {
 }
 
 .button-submit {
-	font-family: "Roboto", sans-serif;
 	font-weight: 500;
 	border-radius: 48px;
 	align-self: flex-end;
@@ -534,7 +535,7 @@ option {
 	flex-direction: column;
 	gap: 12px;
 	margin-bottom: 16px;
-	min-height: 90vh;
+
 }
 
 .bill-container {
@@ -566,6 +567,7 @@ option {
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
+	
 }
 
 .card-body-container-text:first-child p {
@@ -573,6 +575,7 @@ option {
 }
 
 .card-body-container-text {
+	
 	width: 50%;
 	display: flex;
 	flex-direction: column;
@@ -581,6 +584,10 @@ option {
 	flex-shrink: 0;
 	padding: 0 0 0 8px;
 	font-size: 2rem;
+}
+
+.card-body-container-text p {
+	font-family: 'Open Sans', sans-serif;
 }
 
 /******************Card STYLING END********************/

@@ -1,9 +1,9 @@
 // Component which is imported into the BillForm.js component to keep it cleaner. This component adds a bit of flair and colour to the application
-const SelectEmoji = (props) => {
+const SelectEmoji = ({inputOnChange}) => {
 	return (
 		<div className="emoji-flex-container">
 			<label htmlFor="emoji">Pick an icon!</label>
-			<select defaultValue="" name="emoji" id="emoji" onChange={props.inputOnChange}>
+			<select defaultValue="" name="emoji" id="emoji" onChange={inputOnChange}>
 				<option value="" disabled>
 					Icon
 				</option>
