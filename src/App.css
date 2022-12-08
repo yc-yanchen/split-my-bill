@@ -602,7 +602,7 @@ footer {
 	justify-content: center;
 	align-items: center;
 	width: 100vw;
-position: relative;
+position: fixed;
 bottom:0px;
 
 }
