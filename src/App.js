@@ -234,7 +234,6 @@ function App() {
 								{/* Summary screen */}
 								<Header title="Bill Summary" changeDisplay={changeDisplay} />
 								<main>
-									<h2>Use the Bill ID to access your bill in the future!</h2>
 									<Summary billID={billID} billSearch={billSearch} billSearchResult={billSearchResult} copyBill={copyBill} />
 								</main>
 							</>

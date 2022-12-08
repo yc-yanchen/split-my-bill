@@ -332,7 +332,7 @@ main h2 {
 	font-size: 2rem;
 	text-align: left;
 	margin-bottom: 16px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
 }
 
 /* *****************GENERAL STYLING END***************** */
@@ -535,7 +535,6 @@ option {
 	flex-direction: column;
 	gap: 12px;
 	margin-bottom: 16px;
-
 }
 
 .bill-container {
@@ -546,7 +545,7 @@ option {
 	flex-direction: column;
 	gap: 16px;
 	-webkit-box-shadow: 0px 4px 17px -16px rgba(0, 0, 0, 0.69);
-		box-shadow: 0px 4px 17px -16px rgba(0, 0, 0, 0.69);
+	box-shadow: 0px 4px 17px -16px rgba(0, 0, 0, 0.69);
 }
 
 .bill-ID {
@@ -567,7 +566,6 @@ option {
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
-	
 }
 
 .card-body-container-text:first-child p {
@@ -575,7 +573,6 @@ option {
 }
 
 .card-body-container-text {
-	
 	width: 50%;
 	display: flex;
 	flex-direction: column;
@@ -587,11 +584,14 @@ option {
 }
 
 .card-body-container-text p {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
 }
 
+.instruction {
+	text-align: center;
+}
 /******************Card STYLING END********************/
-
+/******************Footer STYLING START********************/
 footer {
 	background-color: var(--highlight);
 	height: 24px;
@@ -607,3 +607,49 @@ footer p {
 	color: var(--on-highlight);
 	font-size: 1.8rem;
 }
+/******************Footer STYLING END********************/
+
+/******************Media Query STYLING START********************/
+@media (min-width: 1200px) {
+	.wrapper {
+		width: 90%;
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	main h2 {
+		align-self: flex-start;
+	}
+
+	.bill-list {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 16px;
+		margin-bottom: 24px;
+		justify-content: space-around;
+		width: 100%;
+	}
+
+	.bill-container {
+		width: calc(50% - 8px);
+	}
+
+	.search-bar {
+		width: 50%;
+	}
+
+	.new-bill-form {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		width: 60%;
+		margin-bottom: 6vh;
+	}
+}
+/******************Media Query STYLING END********************/

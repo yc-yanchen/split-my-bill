@@ -37,6 +37,7 @@ const Summary = ({billSearch, billSearchResult, copyBill}) => {
 						<button className="button-copy coloured-button-style" onClick={copyBill}>
 							Copy Bill ID to Clipboard
 						</button>
+						<p className="instruction">Use the Bill ID to search for your bill later!</p>
 					</li>
 				);
 			})}
