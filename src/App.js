@@ -35,7 +35,8 @@ function App() {
 	// useState which determines the presence of an error related to a push to Firebase
 	const [pushError, setPushError] = useState(false);
 
-	const [databaseStatus, setDatabaseStatus] = useState(false);
+	// databaseError is true if there is no data found in the database
+	const [databaseError, setDatabaseError] = useState(false);
 
 	// Firebase initialization
 	const database = getDatabase(firebase);
@@ -61,8 +62,9 @@ function App() {
 					});
 				}
 				setFirebaseData(tempFirebaseData);
+				setDatabaseError(false);
 			} else {
-				console.log("no data");
+				setDatabaseError(true);
 			}
 		});
 	}, [dbRef]);
@@ -115,10 +117,11 @@ function App() {
 			setPackageToFirebase({});
 			// Setting the key of the most recent upload to a state so that we could search it later
 			setBillID(uploadToFirebase._path.pieces_[0]);
-			setDatabaseStatus(false);
+			//
+			setPushError(false);
 			changeSummary();
 		} catch (error) {
-			setDatabaseStatus(true);
+			setPushError(true);
 		}
 	};
 
@@ -185,7 +188,7 @@ function App() {
 							{/* If the search for is less than 20 characters long, display all previous bills, otherwise, display the search results screen */}
 							{billID.length < 20 ? (
 								<>
-									{databaseStatus ? (
+									{databaseError ? (
 										<h2>Currently no bills, let's create one!</h2>
 									) : (
 										<>
