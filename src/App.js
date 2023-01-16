@@ -1,14 +1,14 @@
 import "./App.css";
 import firebase from "./firebase";
-import {getDatabase, ref, push, onValue} from "firebase/database";
-import {useState, useEffect} from "react";
-import NavigationBar from "./NavigationBar";
-import Header from "./Header";
-import BillDisplay from "./BillDisplay";
-import AddButton from "./AddButton";
-import BillForm from "./BillForm";
-import SearchBar from "./SearchBar";
-import Summary from "./Summary";
+import { getDatabase, ref, push, onValue } from "firebase/database";
+import { useState, useEffect } from "react";
+import NavigationBar from "./Component/NavigationBar";
+import Header from "./Component/Header";
+import BillDisplay from "./Component/BillDisplay";
+import AddButton from "./Component/AddButton";
+import BillForm from "./Component/BillForm";
+import SearchBar from "./Component/SearchBar";
+import Summary from "./Component/Summary";
 
 function App() {
 	// useState for changing UI between the home screen and the form input screen
